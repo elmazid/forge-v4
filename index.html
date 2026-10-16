@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<!-- FORGE V4.0: Tactical Triad System Blueprint[cite: 1] -->
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FORGE V4.0">
+<title>FORGE V4.0 — Tactical Triad System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12141A;--s1:#1A1D24;--s2:#22262F;--s3:#2C313C;--b1:#343A46;--b2:#434A59;--b3:#565E70;--gold:#D4AF37;--gold2:#F1E3A0;--gold-bg:rgba(212,175,55,.08);--tx:#F3F4F6;--t2:#9CA3AF;--t3:#6B7280;--green:#10B981;--green-bg:rgba(16,185,129,.1);--red:#EF4444;--red-bg:rgba(239,68,68,.1);--ora:#F59E0B;--fri:#38BDF8;--sat:#8B5CF6;--sun:#10B981;--mon:#9CA3AF;--tue:#F59E0B;--wed:#EF4444;--thu:#9CA3AF;--r:12px;--r2:8px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--tx);font-family:'Sora',sans-serif;font-size:13px;line-height:1.45;overscroll-behavior-y:none;padding-bottom:env(safe-area-inset-bottom)}
+h1,h2,h3,.raj{font-family:'Rajdhani',sans-serif;letter-spacing:.4px}
+button,input,textarea{font-family:inherit;color:inherit;background:none;border:none;outline:none}
+button{cursor:pointer}
+.hdr{position:sticky;top:0;z-index:40;height:54px;background:rgba(18,20,26,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;padding:0 14px;max-width:480px;margin:0 auto}
+.brand-t{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:19px;color:var(--gold);line-height:1}
+.brand-s{font-size:10px;color:var(--t2);letter-spacing:.5px;text-transform:uppercase}
+#phase-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;background:var(--gold-bg);color:var(--gold2);border:1px solid rgba(212,175,55,.3)}
+.wk-ctrl{display:flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--b1);border-radius:8px;padding:2px 6px}
+.wk-btn{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--gold);padding:0 5px}
+#wnum{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;min-width:42px;text-align:center}
+#rest-banner{position:fixed;top:54px;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:30;background:var(--s1);border-bottom:1px solid var(--gold);padding:8px 14px;display:none;align-items:center;justify-content:space-between;box-shadow:0 8px 20px rgba(0,0,0,.5)}
+#rest-banner.show{display:flex}
+#rest-mode{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:var(--gold-bg);color:var(--gold)}
+#rest-cd{font-family:'Rajdhani',sans-serif;font-size:30px;font-weight:700;color:var(--tx);line-height:1}
+.rest- track{flex:1;margin:0 12px;height:6px;background:var(--s3);border-radius:3px;overflow:hidden}
+#rest-bar{height:100%;background:var(--gold);width:100%;transition:width .25s linear}
+.skip-btn{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;color:var(--gold2);background:var(--s3);border:1px solid var(--b2);padding:5px 10px;border-radius:6px}
+#content{max-width:480px;margin:0 auto;padding:14px 14px 96px}
+.card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:12px;margin-bottom:10px}
+.card-h{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px}
+.card-title{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--tx)}
+.sub-tag{font-size:11px;color:var(--t2);margin-bottom:8px}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.bdg{font-size:10px;padding:2px 7px;border-radius:5px;background:var(--s2);border:1px solid var(--b1);color:var(--t2)}
+.bdg.gold{background:var(--gold-bg);border-color:rgba(212,175,55,.35);color:var(--gold2)}
+.bdg.grn{background:var(--green-bg);border-color:rgba(16,185,129,.35);color:var(--green)}
+.bdg.red{background:var(--red-bg);border-color:rgba(239,68,68,.35);color:var(--red)}
+.sleep-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.slp-btn{padding:7px 4px;border-radius:var(--r2);background:var(--s2);border:1px solid var(--b1);font-size:11px;font-weight:600;text-align:center;color:var(--t2)}
+.slp-btn.on-green{background:var(--green-bg);border-color:var(--green);color:var(--tx)}
+.slp-btn.on-yellow{background:rgba(245,158,11,.12);border-color:var(--ora);color:var(--tx)}
+.slp-btn.on-red{background:var(--red-bg);border-color:var(--red);color:var(--tx)}
+.day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:12px}
+.d-btn{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r2);padding:6px 2px;text-align:center;position:relative}
+.d-btn.active{background:var(--s3);border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.d-btn .d-name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;display:block}
+.d-btn .d-dot{width:6px;height:6px;border-radius:50%;margin:3px auto 0;background:var(--b2)}
+.d-btn.done .d-dot{background:var(--green)}
+.sets-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+.set-c{width:34px;height:34px;border-radius:50%;background:var(--s2);border:1.5px solid var(--b2);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;color:var(--t2);display:flex;align-items:center;justify-content:center}
+.set-c.done{background:var(--green);border-color:var(--green);color:#000}
+.act-btn{padding:6px 10px;border-radius:var(--r2);background:var(--s2);border:1px solid var(--b2);font-family:'Rajdhani',sans-serif;font-weight:600;font-size:13px;color:var(--gold2)}
+.act-btn.tm{border-color:rgba(16,185,129,.4);color:var(--green)}
+.met-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--b1)}
+.met-box{background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:5px 8px;display:flex;align-items:center;justify-content:space-between}
+.met-box label{font-size:10px;color:var(--t2)}
+.met-box input{width:54px;text-align:right;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:15px;color:var(--gold2)}
+.acc-btn{width:100%;text-align:left;padding:7px 9px;background:var(--s2);border:1px solid var(--b1);border-radius:6px;font-size:11px;color:var(--t2);display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.acc-body{display:none;padding:8px;background:rgba(0,0,0,.22);border:1px solid var(--b1);border-top:none;border-radius:0 0 6px 6px;font-size:11.5px;color:var(--tx);white-space:pre-line}
+.acc-body.open{display:block}
+.alert{padding:10px 12px;border-radius:var(--r2);margin-bottom:10px;font-size:11.5px;border:1px solid}
+.alert.red{background:var(--red-bg);border-color:var(--red);color:#FCA5A5}
+.alert.gold{background:var(--gold-bg);border-color:var(--gold);color:var(--gold2)}
+.alert.grn{background:var(--green-bg);border-color:var(--green);color:#A7F3D0}
+.btn-main{width:100%;padding:12px;border-radius:var(--r);background:var(--gold);color:#000;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:16px;text-align:center;letter-spacing:.5px;margin-top:8px}
+.btn-main.done{background:var(--green);color:#000}
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(26,29,36,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--b1);display:grid;grid-template-columns:repeat(4,1fr);padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:40}
+.tab{text-align:center;color:var(--t3);font-size:10px;font-weight:600;padding:4px 0}
+.tab.active{color:var(--gold)}
+.tab span{display:block;font-size:16px;margin-bottom:2px}
+.tbl{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px}
+.tbl th,.tbl td{border:1px solid var(--b1);padding:6px;text-align:left}
+.tbl th{background:var(--s2);color:var(--gold2);font-family:'Rajdhani',sans-serif;font-size:12px}
+#toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);background:var(--s3);color:var(--gold2);border:1px solid var(--gold);padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;z-index:60;display:none;box-shadow:0 6px 16px rgba(0,0,0,.5)}
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;display:none;align-items:flex-end;justify-content:center}
+#overlay.show{display:flex}
+.sheet{width:100%;max-width:480px;background:var(--s1);border-top:1px solid var(--b2);border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div>
+    <div class="brand-t">FORGE V4.0</div>
+    <div class="brand-s">Tactical Triad System</div>
+  </div>
+  <div id="phase-badge">FASE 1: ADAPTASI</div>
+  <div class="wk-ctrl">
+    <button class="wk-btn" onclick="chgWeek(-1)">‹</button>
+    <div id="wnum">M1/11</div>
+    <button class="wk-btn" onclick="chgWeek(1)">›</button>
+  </div>
+</header>
+
+<div id="rest-banner">
+  <span id="rest-mode">Rest</span>
+  <span id="rest-cd">00:00</span>
+  <div class="rest-track" style="flex:1;margin:0 12px;height:6px;background:var(--s3);border-radius:3px;overflow:hidden"><div id="rest-bar"></div></div>
+  <button class="skip-btn" onclick="skipCD()">SKIP ›</button>
+</div>
+
+<main id="content"></main>
+
+<nav class="tabbar">
+  <button class="tab active" id="tab-workout" onclick="setTab('workout')"><span>🏹</span>Latihan</button>
+  <button class="tab" id="tab-gate" onclick="setTab('gate')"><span>🎯</span>Progress</button>
+  <button class="tab" id="tab-history" onclick="setTab('history')"><span>📊</span>Log</button>
+  <button class="tab" id="tab-insight" onclick="setTab('insight')"><span>📖</span>Insight</button>
+</nav>
+
+<div id="toast"></div>
+<div id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="sheet">
+    <h3 id="m-title" class="card-title" style="margin-bottom:6px"></h3>
+    <p id="m-body" style="color:var(--t2);font-size:12px;margin-bottom:14px"></p>
+    <div style="display:flex;gap:8px">
+      <button class="act-btn" style="flex:1;padding:10px" onclick="closeModal()">Batal</button>
+      <button id="m-ok" class="btn-main" style="flex:1;margin:0;padding:10px">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PFX='forge_v40_';
+const DAYS=['fri','sat','sun','mon','tue','wed','thu'];
+const DINFO={
+  fri:{l:'Jumat',s:'Renang A: Skill & Air',c:'var(--fri)',mvwOpt:true},
+  sat:{l:'Sabtu',s:'Gym B: Lower & Archery',c:'var(--sat)',mvwOpt:false},
+  sun:{l:'Ahad',s:'Renang B: Recovery Z1-2',c:'var(--sun)',mvwOpt:true},
+  mon:{l:'Senin',s:'Rest + Micro-Routine #1',c:'var(--mon)',mvwOpt:true},
+  tue:{l:'Selasa',s:'Gym A: Upper & Lari 15\'',c:'var(--tue)',mvwOpt:false},
+  wed:{l:'Rabu',s:'Long Run Z2 / Interval Z3',c:'var(--wed)',mvwOpt:false},
+  thu:{l:'Kamis',s:'Rest + Micro-Routine #2',c:'var(--thu)',mvwOpt:true}
+};
+
+const WC={
+  wm:[
+    {n:'1. Fase Raise: Jalan Cepat / Jogging Santai',u:'2-3 mnt',timerSec:150,info:'Naikkan suhu tubuh & denyut jantung di treadmill.'},
+    {n:'2. Pogo Kecil / Heel-to-Toe Rocking',u:'45 dtk',timerSec:45,info:'Jinjit, turun, angkat jemari. Aktivasi pegas Achilles.'},
+    {n:'3. Bodyweight Good Morning',u:'10 reps',info:'Tangan di dada, dorong bokong lurus ke belakang (jalur RDL).'},
+    {n:'4. Open-the-Gate to Reverse Lunge',u:'6 reps/kaki',info:'Buka lutut ke samping, mundur lunge santai (mobilisasi panggul).'},
+    {n:'5. Torso Rotation & Arm Sweeps',u:'10 reps',info:'Putar dada kiri-kanan, 10 putaran lengan besar & buka-tutup dada.'},
+    {n:'6. Fase Potentiate (Ramp-Up Set)',u:'1 set',info:'Selasa (Gym A): 1x5 Scapular Pull + 1x2 Negative Pull-Up (3d). Sabtu (Gym B): RDL 1x8 rep pakai DB 2x5 kg tempo lambat.'}
+  ],
+  cd:[
+    {n:'1. De-escalation Walk',u:'60-90 dtk',timerSec:60,info:'Jalan santai di sekitar ruangan cegah darah mengendap di tungkai bawah.'},
+    {n:'2. Child\'s Pose + Lat Reach',u:'60 dtk',timerSec:60,info:'Duduk di atas tumit, rentangkan tangan jauh ke depan & geser serong kiri-kanan.'},
+    {n:'3. Pernapasan Diafragma 4-8',u:'30-60 dtk',timerSec:45,info:'Tarik napas tenang 4d lewat hidung, embuskan perlahan 8d lewat mulut (menurunkan HR).'}
+  ]
+};
+
+const MICRO=[
+  {n:'1. McGill Curl-Up',sub:'Kontrol Motorik Lumbal',s:2,r:'5 rep (Tahan 7d)',u:'Bodyweight',rest:30,tm:true,timerSec:7,targetP10:'Lumbal Stabil',plafon:'Bebas Nyeri Pinggang',info:'Satu kaki lurus, satu lutut ditekuk. Selipkan tangan di bawah lengkung lumbal. Angkat kepala & bahu sedikit saja sambil mengunci perut (jangan tekuk leher).',metric:[]},
+  {n:'2. McGill Side Plank',sub:'Stabilitas Lateral (QL & Obliques)',s:2,r:'20-30 dtk/sisi',u:'Bodyweight',rest:30,tm:true,timerSec:25,targetP10:'30 dtk/sisi stabil',plafon:'Korset Lateral Kuat',info:'Tumpuan pada siku dan lutut/kaki. Kunci otot pinggang samping.',metric:[]},
+  {n:'3. McGill Bird-Dog',sub:'Stabilitas Tulang Belakang',s:2,r:'6-8 rep/sisi (Tahan 5d)',u:'Bodyweight',rest:30,tm:true,timerSec:5,targetP10:'8 rep/sisi tanpa goyang',plafon:'Kontrol Saraf Inti',info:'Merangkak, rentangkan tangan kanan ke depan & kaki kiri lurus ke belakang. Kunci perut rapat agar pinggang tak melengkung.',metric:[]},
+  {n:'4. Chin Tucks',sub:'Koreksi Postur Leher',s:1,r:'10 rep (Tahan 2d)',u:'Bodyweight',rest:0,tm:true,timerSec:20,targetP10:'Postur Leher Tegak',plafon:'Anti Forward-Head',info:'Tarik leher dan kepala lurus ke belakang (buat dagu ganda). Melawan postur leher maju akibat layar.',metric:[]},
+  {n:'5. Prone Thoracic Ext.',sub:'Ekstensi Punggung Atas',s:1,r:'8 rep',u:'Bodyweight',rest:0,targetP10:'Thoracic Mobile',plafon:'Anti Bungkuk',info:'Tengkurap, kunci bokong rapat-rapat, angkat dada atas sedikit dari lantai (mencegah kompresi pinggang bawah).',metric:[]},
+  {n:'6. Band Archer Pull',sub:'Retraksi Skapula Panahan',s:1,r:'5 rep/sisi',u:'Band Teringan',rest:0,targetP10:'Belikat Stabil',plafon:'Postur Panahan',info:'Gunakan karet resistensi teringan, tarik seperti memanah, fokus penuh ke retraksi tulang belikat.',metric:[]}
+];
+
+const EX={
+  tue:[
+    {n:'1. Negative Pull-Up (Feeder #1)',sub:'Upper Pull & Kontrol Eksentrik',s:3,r:'3-5',u:'Bodyweight (Bangku)',rest:90,tm:true,timerSec:5,targetP10:'1 Strict Pull-Up (stretch: 2-3)',plafon:'5-8 Strict Pull-Up',info:'Napas: Mengalir, embuskan pelan lewat bibir sepanjang turun.\nEksekusi: Naik dari bangku pijakan, kunci belikat turun, turun SANGAT lambat 4-5 detik.\nProgresi: Perlambat turun hingga 6-8 detik sebelum coba pull-up utuh.',metric:[{k:'npu_sec',l:'Turun (dtk)'},{k:'npu_reps',l:'Rep'}]},
+    {n:'2. Lat Pulldown',sub:'Latissimus Dorsi (Feeder Pull-Up)',s:2,r:'8-10',u:'Awal: 25 kg',rest:90,isComp:true,targetP10:'32-35 kg',plafon:'45-50 kg (2x10 rep)',info:'Napas: Tarik saat beban naik meregang, buang saat ditarik ke dada atas.\nEksekusi: Arahkan siku ke saku belakang.\nProgresi: Naik 1 pin jika tembus 2x10 di 2 sesi berurut, ATAU perlambat eksentrik 4d.',metric:[{k:'lpd_kg',l:'Beban (kg)'},{k:'lpd_reps',l:'Rep'}]},
+    {n:'3. Military Push-Up',sub:'Pendorong Horizontal & Triceps',s:2,r:'Max-2',u:'Bodyweight (RIR 2-3)',rest:90,targetP10:'+5 s.d. +8 rep dari awal',plafon:'20-25 rep bersih/set',info:'Napas: Tarik saat dada turun, buang saat mendorong naik.\nEksekusi: Siku rapat menyusur badan (<45°), perut & bokong kencang. Sisakan 2-3 rep cadangan.\nProgresi: Tambah repetisi bersih perlahan tiap minggu.',metric:[{k:'mpu_reps',l:'Rep Bersih'}]},
+    {n:'4. Incline DB Press (30°)',sub:'Dada Atas & Bahu Depan (Siluet Tegap)',s:3,r:'8-12',u:'Awal: 2 x 5 kg',rest:90,isComp:true,targetP10:'2 x 7,5 kg',plafon:'2 x 15 kg (3x10 rep)',info:'Napas: Tarik saat beban turun ke dada, buang saat didorong.\nSetup: Bangku 30° (1-2 cekungan di atas flat), siku serong 45°.\nProgresi: Capai 3x12 di 5 kg, lalu gunakan Set Jembatan (Set 1-2: 7,5 kg x 5-6 rep, Set 3: 5 kg) menuju 2x7,5 kg.',metric:[{k:'idb_kg',l:'DB/tgn (kg)'},{k:'idb_reps',l:'Rep'}]},
+    {n:'5. Seated Cable Row',sub:'Rhomboids & Punggung Tengah',s:3,r:'10-12',u:'Awal: 18 kg',rest:90,targetP10:'25-27 kg',plafon:'35-40 kg (3x10-12)',info:'Napas: Tarik saat beban maju meregang, buang saat ditarik ke perut.\nEksekusi: Tarik pundak/belikat rapat ke belakang, tahan 1 detik.\nProgresi: Naik 1 pin setelah tembus 3x12 ATAU perlambat eksentrik 4d.',metric:[{k:'scr_kg',l:'Beban (kg)'},{k:'scr_reps',l:'Rep'}]},
+    {n:'6. DB Overhead Press',sub:'Pilar Bahu Vertikal',s:3,r:'8-12',u:'Awal: 2 x 5 kg',rest:90,targetP10:'2 x 7,5 kg',plafon:'2 x 12,5 kg (3x10 rep)',info:'Napas: Tarik saat DB turun sejajar telinga, buang saat dorong vertikal.\nEksekusi: Kunci perut & bokong agar pinggang tak melengkung.\nProgresi: Capai 3x12 di 5 kg, lalu Set Jembatan menuju 2x7,5 kg.',metric:[{k:'ohp_kg',l:'DB/tgn (kg)'},{k:'ohp_reps',l:'Rep'}]},
+    {n:'7. DB Lateral Raise (#1)',sub:'Bahu Samping / V-Taper',s:3,r:'12-15 (s.d. 20)',u:'Awal: 2 x 2,5 kg',rest:75,targetP10:'2x2,5 kg (3x20) / jembatan 5 kg',plafon:'2 x 5-7,5 kg',info:'Napas: Tarik saat turun, buang saat diangkat ke samping.\nEksekusi: Angkat serong depan 30° setinggi bahu.\nProgresi: Capai 15-20 rep bersih di 2,5 kg sebelum plate pecahan / Set Jembatan ke 5 kg.',metric:[{k:'lat1_kg',l:'DB/tgn (kg)'},{k:'lat1_reps',l:'Rep'}]},
+    {n:'8. DB Suitcase Carry',sub:'QL / Anti-Lateral Flexion Core',s:3,r:'25-30 langkah/sisi',u:'Awal: 1 x 10 kg (1 sisi)',rest:60,targetP10:'1 x 12,5-15 kg',plafon:'1 x 17,5-20 kg',info:'Napas: Breathe Behind the Shield (napas dangkal dada atas, perut kunci rapat).\nEksekusi: Jalan tegak 25-30 langkah per sisi tanpa miring.\nProgresi: Tambah ke 40 langkah ATAU +2,5 kg jika stabil penuh.',metric:[{k:'sc_kg',l:'DB (kg)'},{k:'sc_steps',l:'Langkah'}]},
+    {n:'9. Treadmill Zona 2',sub:'Kardio Aerobik Basis (138-152 bpm)',s:1,r:'15 Menit',u:'Incline 0%',rest:0,tm:true,timerSec:900,targetP10:'Efisiensi pace di Z2',plafon:'Lolos Talk Test Lancar',info:'Patokan wajib lolos Talk Test (bisa berbicara kalimat utuh). HR: 138-152 bpm.',metric:[{k:'run_tue_min',l:'Durasi (mnt)'},{k:'run_tue_hr',l:'Avg HR'}]}
+  ],
+  sat:[
+    {n:'1. Dumbbell RDL',sub:'Engsel Panggul, Hamstring & Glutes',s:3,r:'8-10',u:'Awal: 2 x 12,5 kg',rest:120,isComp:true,warn:'WAJIB lepas sepatu lari! Gunakan alas datar tipis / kaus kaki.',targetP10:'2 x 15-17,5 kg',plafon:'2 x 22,5-25 kg',info:'Napas: Bracing perut melingkar. Tarik napas saat turun (3 detik), buang saat naik.\nEksekusi: DB menyusur rapat di depan paha/tulang kering.\nProgresi: +2,5 kg/tangan jika tembus 3x10 di 2 sesi berurut. Gunakan straps jika grip kalah duluan.',metric:[{k:'rdl_kg',l:'DB/tgn (kg)'},{k:'rdl_reps',l:'Rep'}]},
+    {n:'2. DB Goblet Squat',sub:'Kuadrisep & Punggung Tegak',s:3,r:'8-10',u:'Awal: 1 x 10 kg (Dada)',rest:90,isComp:true,warn:'Wajib lepas sepatu berbantalan tebal!',targetP10:'1 x 15 kg',plafon:'1 x 25 kg (3x10 rep)',info:'Napas: Perut kencang. Tarik saat jongkok turun, buang saat berdiri naik.\nEksekusi: Simulasi memeluk beban di depan dada.\nProgresi: +2,5 kg (atau Set Jembatan) jika tembus 3x10 di 2 sesi berurut.',metric:[{k:'gsq_kg',l:'DB Dada (kg)'},{k:'gsq_reps',l:'Rep'}]},
+    {n:'3. Rev. Lunge → Bulgarian Split',sub:'Stabilitas Tungkai Tunggal',s:2,r:'8-10/kaki',u:'Awal: 2 x 2,5 kg',rest:75,warn:'Lepas sepatu lari! Jaga lutut tidak goyang ke dalam.',targetP10:'2 x 7,5 kg di tangan',plafon:'2 x 12,5 kg (total 25 kg)',info:'Napas: Tarik saat turun, buang saat mendorong naik.\nProgresi: Naik +2,5 kg/tangan di Reverse Lunge jika stabil 2x10, beralih ke Bulgarian Split Squat di Fase 2 (Pekan 6+).',metric:[{k:'lng_kg',l:'DB/tgn (kg)'},{k:'lng_reps',l:'Rep/kaki'}]},
+    {n:'4. DB Farmer\'s Walk',sub:'Work Capacity & Grip',s:3,r:'30-40 langkah',u:'Awal: 2 x 10 kg',rest:60,targetP10:'2 x 15 kg',plafon:'2 x 22,5 kg (total 45 kg)',info:'Napas: Breathe Behind the Shield (kunci korset perut, napas dangkal dada atas).\nEksekusi: Pegang 2 DB (jarak 1-2 cm dari paha), jalan 30-40 langkah.\nProgresi: Tambah ke 45 langkah ATAU +2,5 kg/tangan.',metric:[{k:'frm_kg',l:'DB/tgn (kg)'},{k:'frm_steps',l:'Langkah'}]},
+    {n:'5. Cable Face Pull',sub:'Rotator Cuff & Postur Panahan',s:3,r:'12-15',u:'Awal: 5-7,5 kg',rest:60,targetP10:'9-10 kg',plafon:'12,5-15 kg',info:'Napas: Tarik saat beban maju, buang saat tali ditarik ke wajah.\nEksekusi: Buka jempol ke belakang, tahan puncak 1 detik.\nProgresi: Naik 1 pin ATAU perlambat eksentrik 4 detik.',metric:[{k:'cfp_kg',l:'Beban (kg)'},{k:'cfp_reps',l:'Rep'}]},
+    {n:'6. DB Hammer Curl',sub:'Brachioradialis (Lengan Atas/Bawah)',s:3,r:'S1-2: 5-6 | S3: 12-15',u:'Set 1-2: 5kg | Set 3: 2,5kg',rest:90,targetP10:'2x5 kg (3x8-10 bersih)',plafon:'2 x 7,5-10 kg',info:'Napas: Tarik saat turun, buang saat naik (DB vertikal/netral).\nProgresi Jembatan: Set 1-2 pakai 2x5 kg (5-6 rep bersih, RIR≥2), Set 3 pakai 2x2,5 kg (12-15 rep). Wajib istirahat 90 detik! Tambah +1 rep di set 5 kg tiap sesi hingga 3x8-10 penuh.',metric:[{k:'hmr_h_kg',l:'Set 1-2 (kg)'},{k:'hmr_l_kg',l:'Set 3 (kg)'},{k:'hmr_reps',l:'Rep S1-2'}]},
+    {n:'7. DB Wrist Curl',sub:'Fleksor Lengan Bawah',s:2,r:'15-20 (s.d. 25)',u:'Awal: 2 x 2,5 kg',rest:60,targetP10:'2x2,5 kg (2x25 rep)',plafon:'2 x 5-7,5 kg',info:'Napas: Tarik saat pergelangan turun, buang saat ditekuk ke atas.\nEksekusi: Lengan bawah menempel di paha/bangku, tempo lambat.\nProgresi: Capai 20-25 rep di 2,5 kg sebelum naik.',metric:[{k:'dwc_kg',l:'DB/tgn (kg)'},{k:'dwc_reps',l:'Rep'}]},
+    {n:'8. DB Lateral Raise (#2)',sub:'Bahu Samping (Frekuensi Ke-2)',s:2,r:'12-15 (s.d. 20)',u:'Awal: 2 x 2,5 kg',rest:75,targetP10:'2x2,5 kg (2x20 rep)',plafon:'2 x 5-7,5 kg',info:'Napas: Tarik saat turun, buang saat naik.\nTarget: Menambah volume V-taper menjadi total 5 set/pekan.',metric:[{k:'lat2_kg',l:'DB/tgn (kg)'},{k:'lat2_reps',l:'Rep'}]},
+    {n:'9. Negative Pull-Up (#2) + Dead Hang',sub:'Frekuensi Pull Ke-2 + Grip & Dekompresi',s:3,r:'Pull: 2x3 | Hang: 1x20-30"',u:'Bodyweight (Bangku)',rest:90,tm:true,timerSec:30,targetP10:'Hang 45-60 detik',plafon:'Hang 60 detik penuh',info:'Bagian A (Set 1-2): 2x3 rep Negative Pull-Up turun lambat 4-5 detik (frekuensi pull 2x/pekan standar ACSM).\nBagian B (Set 3): 1 set x 20-30 detik Dead Hang dengan bangku pijakan, napas normal santai.',metric:[{k:'npu2_reps',l:'Neg Pull Rep'},{k:'dh_sec',l:'Hang (dtk)'}]}
+  ],
+  wed_z2:[
+    {n:'Long Run Zona 2 (Pilar Lari)',sub:'Treadmill Datar / Outdoor (138-152 bpm)',s:1,r:'35-45 Menit',u:'Mulai 35\', +2-3\'/mg (W5 Deload: 30\')',rest:0,tm:true,timerSec:2100,targetP10:'45 Menit Stabil Z2',plafon:'Kapasitas Aerobik Solid',info:'Wajib lolos Talk Test (bisa bicara kalimat utuh tanpa terengah). Kaki segar sebelum libur Kamis.',metric:[{k:'run_wed_min',l:'Durasi (mnt)'},{k:'run_wed_hr',l:'Avg HR (bpm)'}]}
+  ],
+  wed_z3:[
+    {n:'Interval Ambang Laktat Zona 3 (Pekan 9-10)',sub:'5\' Z2 + 3-4x [3\' Z3 + 2\' Z1] + 5\' Z2',s:4,r:'3 mnt Z3 (152-166 bpm)',u:'Recovery 2 mnt Jog Z1',rest:120,tm:true,timerSec:180,warn:'Syarat mutlak: 2 pekan terakhir lolos Talk Test Z2, tanpa nyeri tulang kering/lutut, tanpa gejala jantung!',targetP10:'4x3 Menit Z3 Terkendali',plafon:'Ambang Laktat Naik',info:'Pemanasan 5 menit Z2, lalu 3-4 interval (3 menit Z3 152-166 bpm + 2 menit jog Z1), tutup pendinginan 5 menit Z2.',metric:[{k:'run_wed_min',l:'Total Mnt'},{k:'run_wed_hr',l:'Peak HR Z3'}]}
+  ],
+  fri:[
+    {n:'1. Renang Lintasan Dasar 25m',sub:'Gaya Dada / Punggung (20-25 Menit)',s:6,r:'1 Lintasan (25m)',u:'Kolam 25m (Sore >14:00)',rest:60,warn:'DILARANG tahan napas maks di kolam & dilarang hiperventilasi! Jangan berenang jika tidur <5 jam.',targetP10:'Pekan 6: 50m | Pekan 10: Kompetensi Penuh',plafon:'Survival Swimming',info:'Berenang per 1 lintasan (25m) dengan fokus luncuran (glide) tenang. Istirahat penuh di tepi kolam setiap selesai 25m hingga napas pulih.',metric:[{k:'swim_fri_m',l:'Jarak Kontinu (m)'},{k:'swim_fri_laps',l:'Total Lap (25m)'}]},
+    {n:'2. Treading Water (Mengapung Tegak)',sub:'Kompetensi Air (5-10 Menit Akhir)',s:4,r:'30-60 detik',u:'Dekat Tepi Kolam + Pengawas',rest:60,tm:true,timerSec:60,warn:'Wajib di dekat tepi dinding kolam dan ada petugas/pengawas!',targetP10:'Treading 60 Detik Tenang',plafon:'Water Competency Red Cross',info:'Gunakan gerakan kaki katak dasar (eggbeater/breaststroke kick) & sapuan tangan tenang.\nTarget 5 Kompetensi Red Cross Pekan 10:\n(1) Masuk air dalam & kembali ke permukaan\n(2) Mengapung/treading 1 menit penuh\n(3) Berputar 360° & temukan jalan keluar\n(4) Berenang 25m tanpa henti\n(5) Keluar kolam tanpa tangga.',metric:[{k:'tread_sec',l:'Treading (dtk)'}]}
+  ],
+  sun:[
+    {n:'Renang B: Skill Dasar + Pemulihan Aktif',sub:'Kolam 25m Zona 1-2 (124-138 bpm)',s:1,r:'20-30 Menit',u:'RPE Santai / Nyaman',rest:0,tm:true,timerSec:1500,targetP10:'Koordinasi Halus & Recovery',plafon:'Active Aquatic Recovery',info:'Renang santai di Zona 1-2 untuk melancarkan koordinasi gerakan dasar sekaligus meredakan DOMS pasca-latihan kaki hari Sabtu.',metric:[{k:'swim_sun_min',l:'Durasi (mnt)'},{k:'swim_sun_laps',l:'Total Lap'}]}
+  ],
+  mon:MICRO,
+  thu:MICRO,
+  w11:{
+    tue:[
+      {n:'1. Strict / Negative Pull-Up (Doorway Bar)',sub:'Sesi 1: Pull + Core Kalistenik',s:3,r:'Max Strict / 3-5 Neg (6d)',u:'Palang Pintu Mandiri',rest:90,tm:true,timerSec:6,targetP10:'Pertahankan Tegangan Pull',plafon:'5-8 Strict Pull-Up',info:'Gunakan doorway pull-up bar yang sudah dipasang sejak Pekan 8.',metric:[{k:'npu_reps',l:'Rep'}]},
+      {n:'2. Inverted Row (Meja Kokoh) / Heavy Band Row',sub:'Horizontal Pull Kalistenik',s:3,r:'10-12',u:'Bodyweight / Heavy Band',rest:90,targetP10:'Retraksi Penuh 1d',plafon:'Punggung Tebal',info:'Tarik dada ke tepi meja kokoh atau gunakan resistance band berat.',metric:[{k:'scr_reps',l:'Rep'}]},
+      {n:'3. Suitcase Carry 1 Tangan (Galon/Ransel)',sub:'Core Anti-Lateral Flexion',s:3,r:'30-40 langkah/sisi',u:'Galon / Ransel Berat',rest:60,targetP10:'Beban Setara 12,5-15 kg',plafon:'Core Baja',info:'Breathe Behind the Shield, jalan tegak tanpa miring.',metric:[{k:'sc_kg',l:'Est. Beban (kg)'}]},
+      {n:'4. Rangkaian McGill Big 3',sub:'Curl-Up + Side Plank + Bird-Dog',s:2,r:'5-8 rep / 25d tahan',u:'Kontrol Lumbal',rest:30,tm:true,timerSec:25,targetP10:'Lumbal Stabil',plafon:'Bebas Cedera',info:'Eksekusi berurutan dengan teknik ketat.',metric:[]}
+    ],
+    fri:[
+      {n:'1. Decline / Feet-Elevated Push-Up',sub:'Sesi 2: Push + Single-Leg',s:3,r:'8-12 (RIR 2)',u:'Kaki di Kursi/Kasur',rest:90,targetP10:'Pengganti Incline Press',plafon:'Dada Atas & Bahu Kuat',info:'Kaki dinaikkan ke permukaan stabil untuk membebani dada atas & bahu depan.',metric:[{k:'mpu_reps',l:'Rep'}]},
+      {n:'2. Pike Push-Up',sub:'Pengganti Overhead Press',s:3,r:'8-10',u:'Bodyweight (Pinggul Tinggi)',rest:90,targetP10:'Pilar Bahu Vertikal',plafon:'Handstand Prep',info:'Bentuk huruf V terbalik, turunkan puncak kepala ke depan tangan.',metric:[{k:'ohp_reps',l:'Rep'}]},
+      {n:'3. Bulgarian Split Squat (Ransel Beban)',sub:'Kekuatan Kaki Tunggal',s:3,r:'8-10/kaki',u:'Memakai/Memeluk Ransel',rest:75,targetP10:'Stabilitas & Hypertrophy Kaki',plafon:'Kaki Kuat Tanpa Gym',info:'Isi ransel dengan buku/botol air agar tegangan mekanis tidak turun.',metric:[{k:'lng_kg',l:'Beban Ransel (kg)'}]},
+      {n:'4. Single-Leg Hip Hinge (RDL 1 Kaki)',sub:'Rantai Posterior & Keseimbangan',s:3,r:'10/kaki',u:'Bodyweight / Beban Tangan',rest:60,targetP10:'Engsel Panggul Tajam',plafon:'Hamstring Kuat',info:'Dorong panggul ke belakang dengan 1 kaki tumpuan, punggung lurus.',metric:[{k:'rdl_reps',l:'Rep/kaki'}]}
+    ],
+    sat:[
+      {n:'1. Rangkaian Pull-Up + Dead Hang',sub:'Sesi 3: Full-Body + Loaded Carry',s:3,r:'Max Pull + 45d Hang',u:'Doorway Pull-Up Bar',rest:90,tm:true,timerSec:45,targetP10:'Frekuensi Pull 2x/Pekan',plafon:'Grip & Upper Back',info:'Jaga volume tarikan vertikal tetap 2x seminggu.',metric:[{k:'dh_sec',l:'Hang (dtk)'}]},
+      {n:'2. Military Push-Up',sub:'Pendorong Horizontal Ketat',s:3,r:'Max-2 (RIR 2)',u:'Siku Rapat <45°',rest:90,targetP10:'15-20+ Rep Bersih',plafon:'25 Rep/Set',info:'Kunci perut dan glutes.',metric:[{k:'mpu_reps',l:'Rep'}]},
+      {n:'3. Goblet Squat Memeluk Galon / Ransel',sub:'Pilar Kuadrisep & Core Tegak',s:3,r:'10-12',u:'Galon / Ransel Berat',rest:90,targetP10:'Tempo Lambat 3d Turun',plafon:'Kapasitas Kerja',info:'Peluk erat galon/ransel di dada, turun dalam dengan punggung tegak.',metric:[{k:'gsq_kg',l:'Beban (kg)'}]},
+      {n:'4. Farmer\'s Walk / Rucking Beban',sub:'Loaded Carry Dunia Nyata',s:3,r:'40-50 langkah',u:'Galon / Ransel Berat',rest:60,targetP10:'Postur Tegap Berbeban',plafon:'Tactical Conditioning',info:'Jalan tegak dengan napas dangkal dada atas.',metric:[{k:'frm_kg',l:'Total Beban (kg)'}]}
+    ],
+    wed:[
+      {n:'Lari Zona 2 ATAU Plan B Indoor Conditioning',sub:'30-40 Menit (HR 138-152 bpm)',s:1,r:'30-40 Menit',u:'Outdoor / Step-Up Bangku / Shadow Boxing',rest:0,tm:true,timerSec:1800,targetP10:'Pertahankan Aerobik Z2',plafon:'Bebas Cuaca Panas/Debu',info:'Jika cuaca luar panas/berdebu, ganti dengan Step-Up konstan naik-turun bangku rendah 25-30 menit atau Shadow Boxing / Skipping interval ringan di kamar pada HR 138-152 bpm.',metric:[{k:'run_wed_min',l:'Durasi (mnt)'},{k:'run_wed_hr',l:'Avg HR'}]}
+    ],
+    sun:[
+      {n:'Recovery Aktif / Indoor Mobility & Z1',sub:'20-30 Menit Santai',s:1,r:'20-30 Menit',u:'Renang / Jalan Santai / Step-Up Z1',rest:0,tm:true,timerSec:1200,targetP10:'Pemulihan Saraf & Otot',plafon:'Active Recovery',info:'Berenang santai jika kolam tersedia atau jalan santai pemulihan.',metric:[{k:'swim_sun_min',l:'Durasi (mnt)'}]}
+    ]
+  }
+};
+
+let ST=JSON.parse(localStorage.getItem(PFX+'state'))||{phase:1,sleep:'green',skipSet:false,mvw:false,rc:{},bench:{1:{},6:{},10:{}}};
+let curTab='workout';
+let activeDay=['sun','mon','tue','wed','thu','fri','sat'][new Date().getDay()];
+let actCtx=null,cdInt=null;
+
+function saveST(){localStorage.setItem(PFX+'state',JSON.stringify(ST));}
+function getW(w){
+  let k=PFX+'w'+w,d=JSON.parse(localStorage.getItem(k));
+  if(!d){
+    d={};DAYS.forEach(x=>d[x]={done:false,sets:{},metrics:{},wm:{},cd:{}});
+    if(w===1){
+      d.tue.metrics={npu_sec:5,lpd_kg:25,mpu_reps:10,idb_kg:5,scr_kg:18,ohp_kg:5,lat1_kg:2.5,sc_kg:10,run_tue_min:15};
+      d.sat.metrics={rdl_kg:12.5,rdl_reps:10,gsq_kg:10,gsq_reps:10,lng_kg:2.5,frm_kg:10,cfp_kg:7.5,hmr_h_kg:5,hmr_l_kg:2.5,dwc_kg:2.5,lat2_kg:2.5,npu2_reps:3,dh_sec:25};
+      d.wed.metrics={run_wed_min:35};
+      d.fri.metrics={swim_fri_m:25,swim_fri_laps:6};
+      d.sun.metrics={swim_sun_min:25};
+    }
+    localStorage.setItem(k,JSON.stringify(d));
+  }
+  return d;
+}
+function saveW(w,d){localStorage.setItem(PFX+'w'+w,JSON.stringify(d));}
+function initWeeks(){for(let i=1;i<=11;i++)getW(i);}
+
+function findLastMetric(day,key){
+  for(let w=ST.phase;w>=1;w--){
+    let d=getW(w)[day];
+    if(d&&d.metrics&&d.metrics[key]!==undefined&&d.metrics[key]!=='')return{week:w,value:d.metrics[key]};
+  }
+  return null;
+}
+
+// Audio & Timer Engine
+window.addEventListener('pointerdown',()=>{
+  if(!actCtx){const A=window.AudioContext||window.webkitAudioContext;if(A)actCtx=new A();}
+  if(actCtx&&actCtx.state==='suspended')actCtx.resume();
+},{passive:true});
+
+function playBeep(){
+  if(!actCtx)return;
+  [0,0.22,0.44].forEach(off=>{
+    const o=actCtx.createOscillator(),g=actCtx.createGain(),t=actCtx.currentTime+off;
+    o.type='sine';o.frequency.setValueAtTime(880,t);
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(0.4,t+0.05);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.2);
+    o.connect(g);g.connect(actCtx.destination);
+    o.start(t);o.stop(t+0.21);
+  });
+}
+
+function runBanner(mode,col,sec,onEnd){
+  clearInterval(cdInt);
+  const b=document.getElementById('rest-banner'),m=document.getElementById('rest-mode'),c=document.getElementById('rest-cd'),bar=document.getElementById('rest-bar');
+  b.classList.add('show');b.style.borderColor=col;
+  m.textContent=mode;m.style.color=col;m.style.background=col==='var(--gold)'?'var(--gold-bg)':col==='var(--green)'?'var(--green-bg)':'rgba(245,158,11,.15)';
+  bar.style.background=col;
+  let rem=sec;
+  const upd=()=>{
+    let mn=String(Math.floor(rem/60)).padStart(2,'0'),sc=String(rem%60).padStart(2,'0');
+    c.textContent=`${mn}:${sc}`;
+    bar.style.width=`${Math.max(0,(rem/sec)*100)}%`;
+  };
+  upd();
+  cdInt=setInterval(()=>{
+    rem--;
+    if(rem<0){clearInterval(cdInt);if(onEnd)onEnd();else{playBeep();b.classList.remove('show');}}
+    else upd();
+  },1000);
+}
+function startRest(sec){if(sec>0)runBanner('Rest','var(--gold)',sec,null);}
+function startActive(sec){
+  runBanner('Prep','var(--ora)',4,()=>{
+    playBeep();
+    runBanner('Aktif','var(--green)',sec,()=>{playBeep();document.getElementById('rest-banner').classList.remove('show');toast('⏱ Timer Selesai!');});
+  });
+}
+function skipCD(){clearInterval(cdInt);document.getElementById('rest-banner').classList.remove('show');}
+
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+  clearTimeout(t._tm);t._tm=setTimeout(()=>t.style.display='none',2200);
+}
+function showModal(title,body,okTxt,cb){
+  document.getElementById('m-title').textContent=title;
+  document.getElementById('m-body').textContent=body;
+  const ok=document.getElementById('m-ok');ok.textContent=okTxt||'OK';
+  ok.onclick=()=>{closeModal();if(cb)cb();};
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(){document.getElementById('overlay').classList.remove('show');}
+
+function chgWeek(delta){
+  let nw=ST.phase+delta;
+  if(nw<1||nw>11)return;
+  ST.phase=nw;saveST();render();
+}
+function setTab(t){
+  curTab=t;
+  document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('active',el.id==='tab-'+t));
+  render();
+}
+
+function getDayExercises(w,day){
+  if(w===11&&EX.w11[day])return EX.w11[day];
+  if(day==='wed')return(w>=9&&w<=10)?EX.wed_z3:EX.wed_z2;
+  return EX[day]||[];
+}
+
+function effSets(ex,w){
+  let s=ex.s;
+  if(w===5&&s===3)s=2;
+  if(ST.sleep==='yellow'&&ST.skipSet&&ex.isComp)s=Math.max(1,s-1);
+  return s;
+}
+
+function toggleSet(day,ei,si,rest){
+  let wd=getW(ST.phase),k=`${ei}_${si}`;
+  wd[day].sets[k]=!wd[day].sets[k];
+  saveW(ST.phase,wd);
+  if(wd[day].sets[k]&&rest>0)startRest(rest);
+  render();
+}
+function toggleWC(day,type,idx){
+  let wd=getW(ST.phase);
+  wd[day][type][idx]=!wd[day][type][idx];
+  saveW(ST.phase,wd);render();
+}
+function saveMetric(day,key,val){
+  let wd=getW(ST.phase);
+  wd[day].metrics[key]=val===''?'':(isNaN(val)?val:Number(val));
+  saveW(ST.phase,wd);
+}
+function toggleDone(day){
+  let wd=getW(ST.phase);
+  wd[day].done=!wd[day].done;
+  saveW(ST.phase,wd);
+  toast(wd[day].done?'✅ Sesi ditandai selesai!':'Sesi dibuka kembali');
+  render();
+}
+
+function renderHeader(){
+  const w=ST.phase;
+  document.getElementById('wnum').textContent=`M${w}/11`;
+  const pb=document.getElementById('phase-badge');
+  if(w<=4)pb.textContent='FASE 1: ADAPTASI';
+  else if(w===5)pb.textContent='PEKAN 5: DELOAD';
+  else if(w<=10)pb.textContent='FASE 2: AKSELERASI';
+  else pb.textContent='M11: KALISTENIK';
+}
+
+function renderWorkout(){
+  const w=ST.phase,wd=getW(w),dObj=wd[activeDay],exs=getDayExercises(w,activeDay);
+  let h=`<div class="card" style="padding:10px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <span style="font-size:11px;font-weight:600;color:var(--t2)">SAKLAR KESIAPAN TIDUR</span>
+      <button class="bdg ${ST.mvw?'gold':''}" onclick="ST.mvw=!ST.mvw;saveST();render()">🛡️ Mode MVW ${ST.mvw?'ON':'OFF'}</button>
+    </div>
+    <div class="sleep-bar">
+      <button class="slp-btn ${ST.sleep==='green'?'on-green':''}" onclick="ST.sleep='green';ST.skipSet=false;saveST();render()">🟢 ≥6.5j (Hijau)</button>
+      <button class="slp-btn ${ST.sleep==='yellow'?'on-yellow':''}" onclick="ST.sleep='yellow';saveST();render()">🟡 5–6.5j (Kuning)</button>
+      <button class="slp-btn ${ST.sleep==='red'?'on-red':''}" onclick="ST.sleep='red';saveST();render()">🔴 &lt;5j (Merah)</button>
+    </div>`;
+  if(ST.sleep==='yellow'){
+    h+=`<button class="act-btn" style="width:100%;border-color:${ST.skipSet?'var(--ora)':'var(--b2)'};color:${ST.skipSet?'var(--ora)':'var(--t2)'}" onclick="ST.skipSet=!ST.skipSet;saveST();render()">⚡ Skip Set Compound (-1 Set): ${ST.skipSet?'AKTIF':'NONAKTIF'}</button>`;
+  }
+  if(ST.sleep==='red'){
+    h+=`<div class="alert red" style="margin:6px 0 0"><strong>STOP:</strong> Batalkan beban/lari berat! Ganti jalan santai/mobility 10m. <strong>DILARANG RENANG!</strong></div>`;
+  }
+  h+=`</div>`;
+
+  if(w===5)h+=`<div class="alert gold"><strong>🛡️ PEKAN 5 (TACTICAL DELOAD):</strong> Semua gerakan 3 set otomatis menjadi 2 set, beban TETAP, RIR ≥ 3. Long Run Rabu 30 menit.</div>`;
+  if(w===8)h+=`<div class="alert gold"><strong>🔧 REMINDER PEKAN 8:</strong> Pasang doorway pull-up bar mandiri di kamar & siapkan ransel/galon sebelum membership berakhir!</div>`;
+  if(w===11)h+=`<div class="alert grn"><strong>🤸 PEKAN 11 (TRANSISI KALISTENIK):</strong> Template 3 Sesi Kalistenik & Loaded Carry aktif (Mulai 21 Des 2026).</div>`;
+
+  // 7-Day Grid starting Friday
+  h+=`<div class="day-grid">`;
+  DAYS.forEach(k=>{
+    const di=DINFO[k],isAct=k===activeDay,isDone=wd[k]&&wd[k].done;
+    h+=`<button class="d-btn ${isAct?'active':''} ${isDone?'done':''}" onclick="activeDay='${k}';render()">
+      <span class="d-name" style="color:${isAct?di.c:'var(--tx)'}">${di.l.slice(0,3)}</span>
+      <span style="font-size:9px;color:var(--t3)">${ST.mvw&&di.mvwOpt?'OPS':'INTI'}</span>
+      <div class="d-dot"></div>
+    </button>`;
+  });
+  h+=`</div>`;
+
+  const curD=DINFO[activeDay];
+  let subTitle=curD.s;
+  if(activeDay==='wed')subTitle=(w>=9&&w<=10)?'Interval Ambang Laktat Z3':(w===5?'Long Run Z2 (Deload 30\')':'Long Run Zona 2 (35-45\')');
+  h+=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <div>
+      <h2 class="raj" style="font-size:20px;color:${curD.c}">${curD.l.toUpperCase()} — ${subTitle}</h2>
+      <div style="font-size:11px;color:var(--t2)">Minggu ${w} • ${dObj.done?'✅ Selesai':'⏳ Belum Selesai'}</div>
+    </div>
+    ${ST.mvw&&curD.mvwOpt?`<span class="bdg gold">OPSIONAL (MVW)</span>`:`<span class="bdg grn">SESI INTI</span>`}
+  </div>`;
+
+  // Warm-up on tue, sat, wed
+  if(['tue','sat','wed'].includes(activeDay)){
+    const wmDone=Object.values(dObj.wm||{}).filter(Boolean).length;
+    h+=`<div class="card">
+      <button class="acc-btn" style="margin:0" onclick="this.nextElementSibling.classList.toggle('open')">
+        <span>🔥 <strong>Pemanasan RAMP</strong> (${wmDone}/${WC.wm.length})</span><span>▾</span>
+      </button>
+      <div class="acc-body">`;
+    WC.wm.forEach((item,idx)=>{
+      const ck=dObj.wm&&dObj.wm[idx];
+      h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--b1)">
+        <div onclick="toggleWC('${activeDay}','wm',${idx})" style="flex:1;cursor:pointer">
+          <div style="font-weight:600;color:${ck?'var(--green)':'var(--tx)'}">${ck?'✓ ':''}${item.n} <span class="bdg">${item.u}</span></div>
+          <div style="font-size:10.5px;color:var(--t2)">${item.info}</div>
+        </div>
+        ${item.timerSec?`<button class="act-btn tm" onclick="startActive(${item.timerSec})">▶ ${item.timerSec}s</button>`:''}
+      </div>`;
+    });
+    h+=`</div></div>`;
+  }
+
+  // Exercise Cards
+  exs.forEach((ex,ei)=>{
+    const sets=effSets(ex,w);
+    let rTxt=ex.r;
+    if(activeDay==='wed'&&w===5&&ex.n.includes('Long Run'))rTxt='30 Menit (Deload)';
+    h+=`<div class="card">
+      <div class="card-h">
+        <div>
+          <div class="card-title">${ex.n}</div>
+          <div class="sub-tag">${ex.sub} • <strong>${sets} set × ${rTxt}</strong> (${ex.u})</div>
+        </div>
+      </div>`;
+    if(ex.warn)h+=`<div class="alert red" style="padding:6px 9px;margin-bottom:8px">⚠️ ${ex.warn}</div>`;
+    h+=`<div class="badges">
+      <span class="bdg gold">🎯 P10: ${ex.targetP10}</span>
+      <span class="bdg">🏔️ Plafon: ${ex.plafon}</span>`;
+    if(ex.metric&&ex.metric.length){
+      ex.metric.forEach(m=>{
+        const last=findLastMetric(activeDay,m.k);
+        if(last)h+=`<span class="bdg grn">Log Terakhir ${m.l}: ${last.value} (M${last.week})</span>`;
+      });
+    }
+    h+=`</div><div class="sets-row">`;
+    for(let si=1;si<=sets;si++){
+      const isS=dObj.sets[`${ei}_${si}`];
+      h+=`<button class="set-c ${isS?'done':''}" onclick="toggleSet('${activeDay}',${ei},${si},${ex.rest||0})">${si}</button>`;
+    }
+    if(ex.tm)h+=`<button class="act-btn tm" onclick="startActive(${ex.timerSec})">▶ Timer ${ex.timerSec}s</button>`;
+    if(ex.rest>0)h+=`<button class="act-btn" onclick="startRest(${ex.rest})">⏱ Rest ${ex.rest}s</button>`;
+    h+=`</div>`;
+    h+=`<button class="acc-btn" onclick="this.nextElementSibling.classList.toggle('open')"><span>ℹ Instruksi, Napas & Progresi</span><span>▾</span></button>
+      <div class="acc-body">${ex.info}</div>`;
+    if(ex.metric&&ex.metric.length){
+      h+=`<div class="met-grid">`;
+      ex.metric.forEach(m=>{
+        const v=(dObj.metrics&&dObj.metrics[m.k]!==undefined)?dObj.metrics[m.k]:'';
+        h+=`<div class="met-box"><label>${m.l}</label><input type="number" step="any" placeholder="-" value="${v}" onchange="saveMetric('${activeDay}','${m.k}',this.value)"></div>`;
+      });
+      h+=`</div>`;
+    }
+    h+=`</div>`;
+  });
+
+  // Red Cross Water Competency Checklist on Friday
+  if(activeDay==='fri'){
+    const rcItems=['1. Masuk air dalam & kembali ke permukaan','2. Mengapung / treading water 1 menit penuh','3. Berputar 360° & temukan jalan keluar','4. Berenang 25 meter tanpa henti','5. Keluar dari kolam tanpa tangga'];
+    h+=`<div class="card"><div class="card-title" style="color:var(--fri);margin-bottom:6px">🏊 Checklist Water Competency (Red Cross P10)</div>`;
+    rcItems.forEach((txt,idx)=>{
+      const on=ST.rc&&ST.rc[idx];
+      h+=`<div onclick="ST.rc=ST.rc||{};ST.rc[${idx}]=!ST.rc[${idx}];saveST();render()" style="padding:6px 0;border-bottom:1px solid var(--b1);cursor:pointer;color:${on?'var(--green)':'var(--t2)'};font-size:11.5px">${on?'☑️':'⬜'} ${txt}</div>`;
+    });
+    h+=`</div>`;
+  }
+
+  // Cool-down on tue, sat, wed
+  if(['tue','sat','wed'].includes(activeDay)){
+    const cdDone=Object.values(dObj.cd||{}).filter(Boolean).length;
+    h+=`<div class="card">
+      <button class="acc-btn" style="margin:0" onclick="this.nextElementSibling.classList.toggle('open')">
+        <span>❄️ <strong>Pendinginan Reset Saraf 3 Menit</strong> (${cdDone}/${WC.cd.length})</span><span>▾</span>
+      </button>
+      <div class="acc-body">`;
+    WC.cd.forEach((item,idx)=>{
+      const ck=dObj.cd&&dObj.cd[idx];
+      h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--b1)">
+        <div onclick="toggleWC('${activeDay}','cd',${idx})" style="flex:1;cursor:pointer">
+          <div style="font-weight:600;color:${ck?'var(--green)':'var(--tx)'}">${ck?'✓ ':''}${item.n} <span class="bdg">${item.u}</span></div>
+          <div style="font-size:10.5px;color:var(--t2)">${item.info}</div>
+        </div>
+        ${item.timerSec?`<button class="act-btn tm" onclick="startActive(${item.timerSec})">▶ ${item.timerSec}s</button>`:''}
+      </div>`;
+    });
+    h+=`</div></div>`;
+  }
+
+  h+=`<button class="btn-main ${dObj.done?'done':''}" onclick="toggleDone('${activeDay}')">${dObj.done?'✓ SESI HARI INI SELESAI':'TANDAI SESI HARI INI SELESAI'}</button>`;
+  document.getElementById('content').innerHTML=h;
+}
+
+function saveBench(wk,k,val){
+  ST.bench=ST.bench||{1:{},6:{},10:{}};
+  ST.bench[wk]=ST.bench[wk]||{};
+  ST.bench[wk][k]=val;
+  saveST();toast('Benchmark disimpan');
+}
+
+function renderGate(){
+  const w=ST.phase,pct=Math.round((w/11)*100);
+  let h=`<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <span class="card-title">PROGRES FASE: MINGGU ${w} DARI 11</span>
+      <span class="bdg gold">${pct}%</span>
+    </div>
+    <div style="height:8px;background:var(--s3);border-radius:4px;overflow:hidden;margin-bottom:10px">
+      <div style="height:100%;width:${pct}%;background:var(--gold)"></div>
+    </div>
+    <div style="font-size:11.5px;color:var(--t2);margin-bottom:10px">
+      • <strong>Pekan 1–4:</strong> Adaptasi saraf, kontrol teknik & dasar renang 25m.<br>
+      • <strong>Pekan 5:</strong> Tactical Deload (potong gerakan 3 set → 2 set, Long Run 30').<br>
+      • <strong>Pekan 6 & 10:</strong> Benchmark Test evaluasi kapasitas.<br>
+      • <strong>Pekan 8:</strong> Wajib pasang doorway pull-up bar mandiri di kamar.<br>
+      • <strong>Pekan 9–10:</strong> Pembukaan Interval Lari Zona 3 (152-166 bpm).<br>
+      • <strong>Pekan 11:</strong> Transisi Kalistenik Penuh & Loaded Carry (21 Des 2026).
+    </div>
+    ${w<11?`<button class="btn-main" onclick="showModal('Lanjut ke Minggu ${w+1}?','Pastikan evaluasi mingguan telah sesuai rencana.','LANJUT',()=>chgWeek(1))">LANJUT KE MINGGU BERIKUTNYA (M${w+1}) ›</button>`:''}
+  </div>`;
+
+  // Benchmark Test Card (W1, W6, W10)
+  const bRows=[
+    {k:'carry_s',l:'1. Carry 2x12,5kg (30m) — Waktu (dtk)'},
+    {k:'carry_rpe',l:'1b. Carry 2x12,5kg (30m) — RPE'},
+    {k:'mpu',l:'2. Military Push-Up (Rep Bersih Maks)'},
+    {k:'npu_s',l:'3a. Negative Pull-Up Turun (detik)'},
+    {k:'spu_r',l:'3b. Strict Pull-Up (Repetisi)'},
+    {k:'hang_s',l:'4. Dead Hang Grip (detik)'},
+    {k:'swim_m',l:'5a. Kompetensi Akuatik Jarak (meter)'},
+    {k:'tread_ok',l:'5b. Treading Water 60" (Lulus/Belum)'}
+  ];
+  h+=`<div class="card">
+    <div class="card-title" style="color:var(--gold)">🏆 BENCHMARK TEST (MINGGU 1, 6, & 10)</div>
+    <div class="sub-tag">Ketuk kolom untuk mencatat hasil evaluasi berkala</div>
+    <table class="tbl"><thead><tr><th>Parameter Uji</th><th>M1</th><th>M6</th><th>M10</th></tr></thead><tbody>`;
+  bRows.forEach(r=>{
+    h+=`<tr><td>${r.l}</td>`;
+    [1,6,10].forEach(wk=>{
+      const v=(ST.bench&&ST.bench[wk]&&ST.bench[wk][r.k])||'';
+      h+=`<td><input style="width:100%;color:var(--gold2);font-weight:600" placeholder="-" value="${v}" onchange="saveBench(${wk},'${r.k}',this.value)"></td>`;
+    });
+    h+=`</tr>`;
+  });
+  h+=`</tbody></table></div>`;
+
+  // Master Lift Summary Table
+  const lifts=[
+    {n:'Negative / Strict Pull-Up',d:'tue',k:'npu_sec',u:'s turun',p10:'1 Strict Pull-Up',plf:'5-8 Strict'},
+    {n:'Lat Pulldown',d:'tue',k:'lpd_kg',u:'kg',p10:'32-35 kg',plf:'45-50 kg'},
+    {n:'Military Push-Up',d:'tue',k:'mpu_reps',u:'rep',p10:'+5..8 rep',plf:'20-25 rep'},
+    {n:'Incline DB Press 30°',d:'tue',k:'idb_kg',u:'kg/tgn',p10:'2x7,5 kg',plf:'2x15 kg'},
+    {n:'Seated Cable Row',d:'tue',k:'scr_kg',u:'kg',p10:'25-27 kg',plf:'35-40 kg'},
+    {n:'DB Overhead Press',d:'tue',k:'ohp_kg',u:'kg/tgn',p10:'2x7,5 kg',plf:'2x12,5 kg'},
+    {n:'DB Suitcase Carry',d:'tue',k:'sc_kg',u:'kg',p10:'1x12,5-15 kg',plf:'1x17,5-20 kg'},
+    {n:'Dumbbell RDL',d:'sat',k:'rdl_kg',u:'kg/tgn',p10:'2x15-17,5 kg',plf:'2x22,5-25 kg'},
+    {n:'DB Goblet Squat',d:'sat',k:'gsq_kg',u:'kg',p10:'1x15 kg',plf:'1x25 kg'},
+    {n:'Lunge / Bulgarian Split',d:'sat',k:'lng_kg',u:'kg/tgn',p10:'2x7,5 kg',plf:'2x12,5 kg'},
+    {n:'DB Farmer\'s Walk',d:'sat',k:'frm_kg',u:'kg/tgn',p10:'2x15 kg',plf:'2x22,5 kg'},
+    {n:'Cable Face Pull',d:'sat',k:'cfp_kg',u:'kg',p10:'9-10 kg',plf:'12,5-15 kg'},
+    {n:'DB Hammer Curl (Berat)',d:'sat',k:'hmr_h_kg',u:'kg/tgn',p10:'2x5 kg (3x8-10)',plf:'2x7,5-10 kg'},
+    {n:'Dead Hang Grip',d:'sat',k:'dh_sec',u:'dtk',p10:'45-60 dtk',plf:'60 dtk'}
+  ];
+  h+=`<div class="card"><div class="card-title">📊 MASTER LIFT & TARGET KAPASITAS</div>
+    <table class="tbl"><thead><tr><th>Gerakan</th><th>Terakhir</th><th>Sasaran P10</th><th>Plafon</th></tr></thead><tbody>`;
+  lifts.forEach(lf=>{
+    const last=findLastMetric(lf.d,lf.k);
+    h+=`<tr><td>${lf.n}</td><td style="color:var(--green);font-weight:600">${last?`${last.value} ${lf.u} (M${last.week})`:'-'}</td><td>${lf.p10}</td><td>${lf.plf}</td></tr>`;
+  });
+  h+=`</tbody></table></div>`;
+  document.getElementById('content').innerHTML=h;
+}
+
+function expJSON(){
+  const out={state:ST,weeks:{}};
+  for(let i=1;i<=11;i++)out.weeks[i]=getW(i);
+  const str=JSON.stringify(out);
+  navigator.clipboard?.writeText(str);
+  const b=new Blob([str],{type:'application/json'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download=`forge_v40_backup_w${ST.phase}.json`;a.click();
+  toast('📥 Backup disalin & diunduh!');
+}
+function impJSON(){
+  const raw=document.getElementById('imp-txt').value.trim();
+  if(!raw)return toast('Masukkan JSON terlebih dahulu');
+  try{
+    const d=JSON.parse(raw);
+    if(d.state){ST=d.state;saveST();}
+    if(d.weeks){Object.keys(d.weeks).forEach(w=>saveW(w,d.weeks[w]));}
+    toast('✅ Data berhasil dipulihkan!');render();
+  }catch(e){toast('❌ Format JSON tidak valid');}
+}
+
+function renderHistory(){
+  let h=`<div class="card"><div class="card-title">🗓️ RIWAYAT 11 MINGGU (KLIK UNTUK BUKA)</div>
+    <div class="sub-tag">Urutan titik hari: Jum • Sab • Ahd • Sen • Sel • Rab • Kam</div>`;
+  for(let w=11;w>=1;w--){
+    const wd=getW(w),cnt=DAYS.filter(k=>wd[k]&&wd[k].done).length;
+    const ph=w<=4?'Fase 1: Adaptasi':(w===5?'Deload':(w<=10?'Fase 2: Akselerasi':'Transisi Kalistenik'));
+    h+=`<div onclick="ST.phase=${w};saveST();setTab('workout')" style="display:flex;justify-content:space-between;align-items:center;padding:9px;margin-top:6px;background:var(--s2);border:1px solid ${w===ST.phase?'var(--gold)':'var(--b1)'};border-radius:8px;cursor:pointer">
+      <div>
+        <div class="raj" style="font-weight:700;font-size:15px;color:${w===ST.phase?'var(--gold2)':'var(--tx)'}">Minggu ${w} — ${ph}</div>
+        <div style="font-size:10.5px;color:var(--t2)">${cnt}/7 Sesi Selesai</div>
+      </div>
+      <div style="display:flex;gap:5px">`;
+    DAYS.forEach(k=>{
+      const done=wd[k]&&wd[k].done;
+      h+=`<span title="${DINFO[k].l}" style="width:10px;height:10px;border-radius:50%;background:${done?DINFO[k].c:'var(--b1)'};display:inline-block"></span>`;
+    });
+    h+=`</div></div>`;
+  }
+  h+=`</div>
+  <div class="card">
+    <div class="card-title" style="color:var(--gold)">💾 DATA BACKUP & RESTORE (iOS SAFE)</div>
+    <div class="sub-tag">Simpan cadangan JSON secara berkala agar log aman</div>
+    <button class="btn-main" style="margin-bottom:10px" onclick="expJSON()">📥 Copy / Export Backup JSON</button>
+    <textarea id="imp-txt" rows="3" placeholder="Tempel (Paste) string JSON backup di sini..." style="width:100%;background:var(--s2);border:1px solid var(--b2);border-radius:8px;padding:8px;font-size:11px;margin-bottom:6px"></textarea>
+    <button class="act-btn" style="width:100%;padding:9px" onclick="impJSON()">📤 Restore / Import JSON</button>
+  </div>`;
+  document.getElementById('content').innerHTML=h;
+}
+
+function renderInsight(){
+  const secs=[
+    {t:'🚨 SOP Medis, Red Flags Jantung, Cauda Equina & Keselamatan Renang/Apnea',b:`• Alas Kaki: Wajib lepas sepatu lari berbantalan tebal saat RDL, Squat, dan Lunge. Gunakan alas datar tipis atau kaus kaki agar pijakan stabil.
+• Skrining Jantung: Jika mengalami nyeri/tekanan dada, menjalar ke leher/rahang/lengan, sesak tak wajar, pusing hampir pingsan, atau berdebar tak wajar saat olahraga: BERHENTI TOTAL & duduk istirahat. Jika tak reda atau disertai keringat dingin langsung ke UGD.
+• Red Flags Lumbal & Cauda Equina: Hentikan sesi jika nyeri tajam menjalar ke bokong/tungkai atau kesemutan. DARURAT UGD bila baal di selangkangan/anus, gangguan BAK/BAB, atau kelemahan tungkai mendadak. Jika nyeri pinggang menetap >24 jam, potong beban 20%.
+• Anti-Shallow Water Blackout (Apnea): Rekor tahan napas statis maksimal HANYA boleh di darat (kering). Dilarang keras tahan napas maksimal di kolam & dilarang hiperventilasi sebelum menyelam/berenang.
+• Keselamatan Kolam 25m: Berenang hanya saat ada penjaga/orang lain; treading water wajib di dekat tepi kolam dengan pengawas; keluar bila kram/pusing; DILARANG berenang jika tidur <5 jam.`},
+    {t:'📈 Protokol 3 Langkah Naik Beban Dumbbell (Set Jembatan) & Anti-Failure (RIR 2-3)',b:`• Kendali RPE 7-8 (RIR 2-3): Sisakan 2-3 repetisi cadangan dengan teknik sempurna di tiap set. Dilarang memaksakan set sampai gagal (RIR 0) karena memperlambat pemulihan hingga 48-72 jam.
+• Langkah 1 (Repetisi Dulu): Capai batas atas rentang repetisi di semua set pada RIR 2-3 (RDL/Goblet/Lunge: 10 | Press: 12 | Lateral/Hammer: 15 | Wrist: 20).
+• Langkah 2 (Metode Set Jembatan 2-3 Sesi): Saat naik +2,5 kg (mis. Press 5→7,5 kg atau Curl 2,5→5 kg), lakukan Set 1-2 dengan DB baru untuk 5-6 rep bersih (RIR ≥ 2), lalu Set 3 turun kembali ke DB lama sampai RIR 2. Istirahat 90 detik, tambah +1 rep di set berat tiap sesi.
+• Langkah 3 (Pindah Penuh): Jika set berat sudah tembus 8 rep bersih di semua set pada RIR 2, gunakan DB baru di semua set.
+• Kenaikan Kabel/Mesin: Naik 1 pin setelah tembus batas atas rep, atau perlambat eksentrik 4 detik jika lompatan pin terlalu berat.`},
+    {t:'🥩 Panduan Nutrisi (2.230-2.540 kkal, 4x Protein Harian/Puasa, Pre-Workout Subuh)',b:`• Target Berat Badan (53 kg → 55 kg): Surplus 2.230 - 2.540 kkal/hari. Timbang BB pagi hari setelah ke toilet 3x/pekan (ambil rata-rata). Jika stagnan 2 minggu, tambah +150-250 kkal.
+• Distribusi Protein (85-117g / hari): Wajib dibagi ke dalam minimal 4 waktu makan (@21-29g protein per makan).
+• Hari Puasa (Senin & Kamis): Bagi 4 asupan protein pada Saat Berbuka, Makan Malam, Sebelum Tidur, dan Sahur (@21-29g).
+• Pre-Workout Ba'da Subuh: Konsumsi karbohidrat mudah cerna + sedikit protein 20-30 menit sebelum latihan pagi (kurma/pisang + susu/whey).`},
+    {t:'⌚ Zona HR Huawei Watch Fit 4 Pro (Z1, Z2, Z3) & Protokol Sesi Terlewat / MVW',b:`• Profil HR (Rest: 53 bpm, Max: 194 bpm, HRR: 141):
+  - Zona 1 (124-138 bpm): Pemulihan & Renang Ahad.
+  - Zona 2 (138-152 bpm): Aerobik utama Selasa 15' & Rabu Long Run (Wajib lolos Talk Test).
+  - Zona 3 (152-166 bpm): Ambang Laktat, khusus Rabu Pekan 9-10 (5' Z2 + 3-4x [3' Z3 + 2' Z1] + 5' Z2).
+• Kalibrasi RHR Pagi: Hijau (Tidur ≥6,5j, RHR normal), Kuning (Tidur 5-6,5j atau RHR +5..6 bpm → aktifkan Skip Set -1 compound), Merah (Tidur <5j atau RHR ≥+7 bpm → batalkan latihan berat & dilarang renang).
+• Protokol Sesi Terlewat: 1 sesi lewat = lanjut normal (jangan dobel); 2 sesi lewat sepekan = ulangi volume minggu lalu; >2 minggu absen = potong volume 30% di minggu pertama kembali.
+• Minimum Viable Week (MVW): Saat pekan ujian/padat, jalankan 3 sesi inti: Gym A (Selasa) + Gym B (Sabtu) + Lari Z2 (Rabu).`},
+    {t:'🤸 Rencana Konkret Pekan 11+ (Transisi Kalistenik & Plan B Kardio Indoor)',b:`• Persiapan Alat (Maksimal Pekan 8): Pasang doorway pull-up bar mandiri di kamar & siapkan ransel kuat (diisi buku/botol air) atau galon air.
+• Sesi 1 (Selasa - Pull & Core): Strict/Negative Pull-Up di palang pintu, Inverted Row bawah meja kokoh / Band Row berat, Suitcase Carry 1 tangan dengan galon/ransel, & McGill Big 3.
+• Sesi 2 (Jumat - Push & Single-Leg): Decline/Feet-Elevated Push-Up, Pike Push-Up (pengganti OHP), Bulgarian Split Squat dengan ransel beban, & Single-Leg Hip Hinge.
+• Sesi 3 (Sabtu - Full-Body & Carry): Rangkaian Pull-Up, Military Push-Up, Goblet Squat memeluk galon/ransel, & Farmer's Walk / Rucking.
+• Plan B Kardio Indoor: Bila cuaca panas/berdebu dan akses kolam berakhir, ganti dengan Step-Up bangku rendah 25-30 menit atau Shadow Boxing / Skipping interval di kamar pada HR Zona 2 (138-152 bpm).`}
+  ];
+  let h=`<div class="card"><div class="card-title" style="color:var(--gold)">📖 BLUEPRINT FORGE V4.0 REFERENCE</div><div class="sub-tag">Ketuk setiap modul untuk membaca protokol lengkap</div>`;
+  secs.forEach((s,i)=>{
+    h+=`<button class="acc-btn" style="font-weight:600;color:var(--tx);margin-top:8px" onclick="this.nextElementSibling.classList.toggle('open')"><span>${s.t}</span><span>▾</span></button>
+    <div class="acc-body ${i===0?'open':''}">${s.b}</div>`;
+  });
+  h+=`</div>`;
+  document.getElementById('content').innerHTML=h;
+}
+
+function render(){
+  renderHeader();
+  if(curTab==='workout')renderWorkout();
+  else if(curTab==='gate')renderGate();
+  else if(curTab==='history')renderHistory();
+  else renderInsight();
+}
+
+initWeeks();
+render();
+</script>
+</body>
+</html>
