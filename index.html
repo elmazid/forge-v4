@@ -18,14 +18,14 @@ body{background:var(--bg);color:var(--tx);font-family:'Sora',sans-serif;font-siz
 h1,h2,h3,.raj{font-family:'Rajdhani',sans-serif;letter-spacing:.4px}
 button,input,textarea{font-family:inherit;color:inherit;background:none;border:none;outline:none}
 button{cursor:pointer}
-.hdr{position:sticky;top:0;z-index:40;height:54px;background:rgba(18,20,26,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;padding:0 14px;max-width:480px;margin:0 auto}
+.hdr{position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top);height:calc(54px + env(safe-area-inset-top));background:rgba(18,20,26,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;padding-left:14px;padding-right:14px;max-width:480px;margin:0 auto}
 .brand-t{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:19px;color:var(--gold);line-height:1}
 .brand-s{font-size:10px;color:var(--t2);letter-spacing:.5px;text-transform:uppercase}
 #phase-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;background:var(--gold-bg);color:var(--gold2);border:1px solid rgba(212,175,55,.3)}
 .wk-ctrl{display:flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--b1);border-radius:8px;padding:2px 6px}
 .wk-btn{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--gold);padding:0 5px}
 #wnum{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;min-width:42px;text-align:center}
-#rest-banner{position:fixed;top:54px;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:30;background:var(--s1);border-bottom:1px solid var(--gold);padding:8px 14px;display:none;align-items:center;justify-content:space-between;box-shadow:0 8px 20px rgba(0,0,0,.5)}
+#rest-banner{position:fixed;top:calc(54px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:30;background:var(--s1);border-bottom:1px solid var(--gold);padding:8px 14px;display:none;align-items:center;justify-content:space-between;box-shadow:0 8px 20px rgba(0,0,0,.5)}
 #rest-banner.show{display:flex}
 #rest-mode{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:var(--gold-bg);color:var(--gold)}
 #rest-cd{font-family:'Rajdhani',sans-serif;font-size:30px;font-weight:700;color:var(--tx);line-height:1}
